@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from ai.openai_client import generate_audit_comment
+from ai.openai_client import generate_audit_comment, ai_available
 from rules.rules_engine import validate_record
 from anomaly.anomaly_detector import detect_anomaly
 import traceback
@@ -40,7 +40,8 @@ def audit_transaction(record: AuditRequest):
         return {
             "issues": issues,
             "ai_comments": ai_comments,
-            "anomaly_detected": anomaly
+            "anomaly_detected": anomaly,
+            "ai_enabled": ai_available()
         }
 
     except Exception as e:
@@ -52,7 +53,8 @@ def audit_transaction(record: AuditRequest):
             "issues": [],
             "ai_comments": [],
             "anomaly_detected": False,
-            "error": str(e)
+            "error": str(e),
+            "ai_enabled": ai_available()
         }
 
 
@@ -82,5 +84,6 @@ def audit_and_export(record: AuditRequest):
 
     return {
         "message": "Audit completed and CSV generated",
-        "file": file_name
+        "file": file_name,
+        "ai_enabled": ai_available()
     }
