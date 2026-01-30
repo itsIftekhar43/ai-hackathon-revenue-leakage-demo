@@ -56,7 +56,7 @@ Commission cannot exceed fare
 
 ✅ AI Audit Engine
 
-Uses OpenAI to generate human-like audit explanations
+Uses OpenAI to generate human-like audit explanations (disabled by default if no API key is present)
 
 Explains rule violations clearly for auditors
 
@@ -67,3 +67,15 @@ Flags suspicious refunds (e.g., refund > 80% of fare)
 ✅ API Contract Validation
 
 Strong request validation using Pydantic
+
+
+## Enabling OpenAI
+
+To enable AI-generated comments, create a `.env` file (do not commit it) and set your OpenAI API key:
+
+```
+OPENAI_API_KEY=sk-...
+USE_AI=true
+```
+
+If `USE_AI` is set to `false` or `OPENAI_API_KEY` is missing, the backend will return helpful mock messages and include `ai_enabled: false` in API responses.
