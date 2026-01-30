@@ -10,9 +10,17 @@ function AuditForm({ onBack }) {
   useEffect(() => {
     fetch('/health')
       .then((r) => r.json())
-      .then((j) => setAiEnabled(Boolean(j.ai_enabled)))
-      .catch(() => setAiEnabled(false));
+      .then((j) => {
+        setAiEnabled(Boolean(j.ai_enabled));
+        setAiReal(Boolean(j.ai_real));
+      })
+      .catch(() => {
+        setAiEnabled(false);
+        setAiReal(false);
+      });
   }, []);
+
+  const [aiReal, setAiReal] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,7 +78,13 @@ function AuditForm({ onBack }) {
 
       {!aiEnabled && (
         <div style={{ marginBottom: 12, color: '#fff', background: '#b00020', padding: 8, borderRadius: 6 }}>
-          AI appears to be disabled. To enable AI comments, add an `OPENAI_API_KEY` to your `.env` and set `USE_AI=true`.
+          AI is turned off. To enable AI comments, add an `OPENAI_API_KEY` to your `.env` and set `USE_AI=true`.
+        </div>
+      )}
+
+      {aiEnabled && !aiReal && (
+        <div style={{ marginBottom: 12, color: '#333', background: '#fff3cd', padding: 8, borderRadius: 6 }}>
+          <strong>AI is running in local mock mode</strong> — you will see helpful generated explanations but these are not from OpenAI. To use real OpenAI responses, set `OPENAI_API_KEY` in your `.env`.
         </div>
       )}
 
@@ -121,7 +135,7 @@ function AuditForm({ onBack }) {
             </div>
 
             <div style={{ flex: 1 }}>
-              <h4>AI Comments {response.ai_enabled === false && <small style={{ color: '#666' }}>(AI disabled)</small>}</h4>
+              <h4>AI Comments {response.ai_real === false && <small style={{ color: '#666' }}>(mock)</small>}</h4>
               {response.ai_comments && response.ai_comments.length ? (
                 <ol>
                   {response.ai_comments.map((c, idx) => (
@@ -129,7 +143,7 @@ function AuditForm({ onBack }) {
                   ))}
                 </ol>
               ) : (
-                <div style={{ color: '#666' }}>{response.ai_enabled === false ? 'AI is disabled. Enable OPENAI_API_KEY and set USE_AI=true to get AI comments.' : 'No AI comments'}</div>
+                <div style={{ color: '#666' }}>{response.ai_real === false ? 'AI comments are mock-generated. Set OPENAI_API_KEY to use real OpenAI responses.' : 'No AI comments'}</div>
               )}
 
               <div style={{ marginTop: 12 }}>

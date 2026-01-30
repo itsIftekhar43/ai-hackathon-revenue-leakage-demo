@@ -1,0 +1,72 @@
+/* Full page AI background */
+.page {
+  min-height: 100vh;
+  background: linear-gradient(
+      rgba(10, 10, 30, 0.85),
+      rgba(10, 10, 30, 0.85)
+    ),
+    url("https://images.unsplash.com/photo-1677442136019-21780ecad995");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Glass card */
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 32px;
+  width: 420px;
+  color: #fff;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+  text-align: center;
+}
+
+.card h1 {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+/* Button */
+button {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Result */
+.result {
+  margin-top: 20px;
+  max-height: 250px;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  text-align: left;
+}

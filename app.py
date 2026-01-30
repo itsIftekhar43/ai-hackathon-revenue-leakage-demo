@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from ai.openai_client import generate_audit_comment, ai_available
+from ai.openai_client import generate_audit_comment, ai_available, real_ai_available
 from rules.rules_engine import validate_record
 from anomaly.anomaly_detector import detect_anomaly
 import traceback
@@ -41,7 +41,8 @@ def audit_transaction(record: AuditRequest):
             "issues": issues,
             "ai_comments": ai_comments,
             "anomaly_detected": anomaly,
-            "ai_enabled": ai_available()
+            "ai_enabled": ai_available(),
+            "ai_real": real_ai_available()
         }
 
     except Exception as e:
@@ -54,7 +55,8 @@ def audit_transaction(record: AuditRequest):
             "ai_comments": [],
             "anomaly_detected": False,
             "error": str(e),
-            "ai_enabled": ai_available()
+            "ai_enabled": ai_available(),
+            "ai_real": real_ai_available()
         }
 
 
@@ -63,7 +65,8 @@ def health_check():
     return {
         "status": "UP",
         "service": "AI Audit Engine",
-        "ai_enabled": ai_available()
+        "ai_enabled": ai_available(),
+        "ai_real": real_ai_available()
     }
 
 @app.post("/audit/export")
