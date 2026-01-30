@@ -8,7 +8,7 @@ function AuditForm() {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://animated-space-adventure-jxp4rpjq9g9hq5v6-8000.app.github.dev/audit",
+        "/audit",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
