@@ -63,7 +63,7 @@ def health_check():
     return {
         "status": "UP",
         "service": "AI Audit Engine",
-        "ai_enabled": True
+        "ai_enabled": ai_available()
     }
 
 @app.post("/audit/export")
