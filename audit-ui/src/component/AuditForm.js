@@ -126,7 +126,31 @@ function AuditForm({ onBack }) {
               {response.issues && response.issues.length ? (
                 <ul>
                   {response.issues.map((i, idx) => (
-                    <li key={idx}>{i}</li>
+                    <li key={idx} style={{ marginBottom: 8 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                          <strong>{i.message}</strong>
+                          {i.field && (
+                            <div style={{ fontSize: 12, color: '#666' }}>{`${i.field}: ${i.value}`}</div>
+                          )}
+                        </div>
+                        <div>
+                          <span
+                            style={{
+                              padding: '4px 8px',
+                              borderRadius: 6,
+                              background: i.severity === 'high' ? '#fee2e2' : i.severity === 'medium' ? '#fef3c7' : '#eef2ff',
+                              color: i.severity === 'high' ? '#b91c1c' : i.severity === 'medium' ? '#92400e' : '#1e3a8a',
+                              fontWeight: 700,
+                              fontSize: 12,
+                              textTransform: 'capitalize'
+                            }}
+                          >
+                            {i.severity}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
                   ))}
                 </ul>
               ) : (

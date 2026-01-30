@@ -33,8 +33,11 @@ def audit_transaction(record: AuditRequest):
         anomaly = detect_anomaly(record_dict)
 
         ai_comments = []
+        # `issues` is now a list of structured issue objects. Pass a clear message to the AI.
         for issue in issues:
-            comment = generate_audit_comment(issue)
+            # If issue is a dict, pass its message; otherwise pass the raw value
+            prompt = issue["message"] if isinstance(issue, dict) else str(issue)
+            comment = generate_audit_comment(prompt)
             ai_comments.append(comment)
 
         return {
